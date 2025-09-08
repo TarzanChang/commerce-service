@@ -74,7 +74,7 @@ spring.jpa.show-sql=true
 
 - users_segments
 
-| column_name       	| data_type 	| nullable 	| descrption                         	|
+| **column_name**  	| **data_type** 	| **nullable** 	| **descrption**                	|
 |-------------------	|-----------	|----------	|------------------------------------	|
 | users_segments_id 	| int       	| n        	| primary key,auto_increment         	|
 | user_id           	| int       	| n        	| FK1,reference users(user_id)       	|
@@ -86,7 +86,7 @@ spring.jpa.show-sql=true
 
 - orders
 
-| column_name      	| data_type 	| nullable 	| descrption                                        	|
+| **column_name**      	 | **data_type** 	 | **nullable** 	 | **descrption**                      	|
 |------------------	|-----------	|----------	|---------------------------------------------------	|
 | order_id         	| int       	| n        	| primary key,auto_increment                        	|
 | order_status     	| string    	| n        	| varchar(10),訂單狀態, ordered,delivered,cancelled 	|
@@ -100,13 +100,71 @@ spring.jpa.show-sql=true
 
 - orders_detail
 
-| column_name      	| data_type 	| nullable 	| descrption                         	|
-|------------------	|-----------	|----------	|------------------------------------	|
-| od_detail_id     	| int       	| n        	| primary key,auto_increment         	|
-| order_id         	| int       	| n        	| FK1,reference orders(order_id)     	|
-| product_id       	| int       	| n        	| FK1,reference products(product_id) 	|
-| quantity         	| int       	|          	| 數量                               	|
-| creation_date    	| date_time 	| n        	|                                    	|
-| created_by       	| string    	| n        	|                                    	|
-| last_update_date 	| date_time 	| n        	|                                    	|
-| last_updated_by  	| string    	| n        	|                                    	|
+| **column_name**      	 | **data_type** 	 | **nullable** 	 | **descrption**                         	 |
+|------------------------|-----------------|----------------|------------------------------------------|
+| od_detail_id     	     | int       	     | n        	     | primary key,auto_increment         	     |
+| order_id         	     | int       	     | n        	     | FK1,reference orders(order_id)     	     |
+| product_id       	     | int       	     | n        	     | FK1,reference products(product_id) 	     |
+| quantity         	     | int       	     | 	              | 數量                               	       |
+| creation_date    	     | date_time 	     | n        	     | 	                                        |
+| created_by       	     | string    	     | n        	     | 	                                        |
+| last_update_date 	     | date_time 	     | n        	     | 	                                        |
+| last_updated_by  	     | string    	     | n        	     | 	                                        |
+
+- invoices
+
+| **column_name**  	| **data_type** 	| **nullable** 	| **descrption**                	|
+|------------------	|---------------	|--------------	|-------------------------------	|
+| invoices_id      	| int           	| n            	| primary key,auto_increment    	|
+| invoices_date    	| date          	| n            	| 訂單日期                      	|
+| order_id         	| int           	| n            	| FK,reference orders(order_id) 	|
+| creation_date    	| date_time     	| n            	|                               	|
+| created_by       	| string        	| n            	|                               	|
+| last_update_date 	| date_time     	| n            	|                               	|
+| last_updated_by  	| string        	| n            	|                               	|
+
+- categories
+
+| **column_name**  	| **data_type** 	| **nullable** 	| **descrption**             	|
+|------------------	|---------------	|--------------	|----------------------------	|
+| category_id      	| int           	| n            	| primary key,auto_increment 	|
+| category_name    	| string        	| n            	| varchar(20)                	|
+| image            	| blob          	|              	|                            	|
+| creation_date    	| date_time     	| n            	|                            	|
+| created_by       	| string        	| n            	|                            	|
+| last_update_date 	| date_time     	| n            	|                            	|
+| last_updated_by  	| string        	| n            	|                            	|
+
+- products
+
+| **column_name**  	| **data_type** 	| **nullable** 	| **descrption**                      	|
+|------------------	|---------------	|--------------	|-------------------------------------	|
+| product_id       	| int           	| n            	| primary key,auto_increment          	|
+| product_name     	| string        	| n            	| varchar(50),產品名稱                	|
+| category_id      	| int           	| n            	| FK,reference categorys(category_id) 	|
+| width            	| decimal(10,2) 	|              	| 寬度                                	|
+| height           	| decimal(10,2) 	|              	| 長度                                	|
+| price            	| decimal(10,2) 	|              	| 價格                                	|
+| stock            	| int           	|              	| 庫存                                	|
+| description      	| string        	|              	| varchar(500)                        	|
+| image            	| blob          	|              	|                                     	|
+| creation_date    	| date_time     	| n            	|                                     	|
+| created_by       	| string        	| n            	|                                     	|
+| last_update_date 	| date_time     	| n            	|                                     	|
+| last_updated_by  	| string        	| n            	|                                     	|
+
+- product_reviews
+
+| **column_name**  	| **data_type** 	| **nullable** 	| **descrption**                     	|
+|------------------	|---------------	|--------------	|------------------------------------	|
+| pt_review_id     	| int           	| n            	| primary key,auto_increment         	|
+| review_date      	| date_time     	| n            	|                                    	|
+| product_id       	| int           	| n            	| FK1,reference products(product_id) 	|
+| customer         	| int           	| n            	| FK2,reference users(user_id)       	|
+| rating           	| int           	|              	|                                    	|
+| comment          	| string        	|              	| varchar(300)                       	|
+| review_status    	| string        	| n            	| accepted,rejected,pending          	|
+| creation_date    	| date_time     	| n            	|                                    	|
+| created_by       	| string        	| n            	|                                    	|
+| last_update_date 	| date_time     	| n            	|                                    	|
+| last_updated_by  	| string        	| n            	|                                    	|
