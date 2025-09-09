@@ -35,83 +35,79 @@ spring.jpa.show-sql=true
 ### 資料表設計
 - users table
 
-|  **column_name** 	| **data_type** 	| **nullable** 	|       **descrption**       	|
-|:----------------:	|:-------------:	|:------------:	|:--------------------------:	|
-| user_id          	| int           	| n            	| primary key,auto_increment 	|
-| first_name       	| string        	| n            	| varchar(20),名             	|
-| last_name        	| string        	| n            	| varchar(20),姓             	|
-| email            	| string        	| n            	| varchar(50),電子信箱       	|
-| birthday         	| date          	|              	| 生日                       	|
-| address          	| string        	| n            	| varchar(200),地址          	|
-| city             	| string        	| n            	| varchar(50),城市           	|
-| state            	| string        	| n            	| varchar(50),區域           	|
-| zipcode          	| string        	| n            	| varchar(50),郵遞區號       	|
-| password         	| string        	| n            	| varchar(10),密碼           	|
-| has_newsletter   	| boolen        	|              	| 有無新訊息                 	|
-| creation_date    	| date_time     	| n            	|                            	|
-| created_by       	| string        	| n            	|                            	|
-| last_update_date 	| date_time     	| n            	|                            	|
-| last_updated_by  	| string        	| n            	|                            	|
+| **column_name**  	| **data_type** 	| **nullable** 	 | **descrption**             	|
+|------------------	|---------------	|----------------|----------------------------	|
+| user_id          	| int           	| n            	 | primary key,auto_increment 	|
+| first_name       	| string        	| n            	 | varchar(20),名             	|
+| last_name        	| string        	| n            	 | varchar(20),姓             	|
+| email            	| string        	| n            	 | varchar(50),電子信箱       	|
+| birthday         	| date          	| y            	 | 生日                       	|
+| address          	| string        	| n            	 | varchar(200),地址          	|
+| city             	| string        	| n            	 | varchar(50),城市           	|
+| state            	| string        	| n            	 | varchar(50),區域           	|
+| zipcode          	| string        	| n            	 | varchar(50),郵遞區號       	|
+| password         	| string        	| n            	 | varchar(10),密碼           	|
+| role             	| string        	| y            	 | varchar(10),角色           	|
+| has_newsletter   	| boolen        	| y            	 | 有無新訊息                 	|
+| delete_at        	| date_time     	| y            	 |                            	|
+| creation_date    	| date_time     	| n            	 |                            	|
+| created_by       	| string        	| n            	 |                            	|
+| last_update_date 	| date_time     	| n            	 |                            	|
+| last_updated_by  	| string        	| n            	 |                            	|
 
-- segments
+- segments table
 
 | **column_name**  	| **data_type** 	| **nullable** 	| **descrption**             	|
 |------------------	|---------------	|--------------	|----------------------------	|
 | segment_id       	| int           	| n            	| primary key,auto_increment 	|
-| segments_name    	| string        	| n            	| varchar(20)                	|
-| creation_date    	| date_time     	| n            	|                            	|
-| created_by       	| string        	| n            	|                            	|
-| last_update_date 	| date_time     	| n            	|                            	|
-| last_updated_by  	| string        	| n            	|                            	|
-| state            	| string        	| n            	| varchar(50),區域           	|
-| zipcode          	| string        	| n            	| varchar(50),郵遞區號       	|
-| password         	| string        	| n            	| varchar(10),密碼           	|
-| has_newsletter   	| boolen        	|              	| 有無新訊息                 	|
+| segment_name     	| string        	| n            	| varchar(20)                	|
+| delete_at        	| date_time     	| y            	|                            	|
 | creation_date    	| date_time     	| n            	|                            	|
 | created_by       	| string        	| n            	|                            	|
 | last_update_date 	| date_time     	| n            	|                            	|
 | last_updated_by  	| string        	| n            	|                            	|
 
-- users_segments
+- users_segments table
 
-| **column_name**  	| **data_type** 	| **nullable** 	| **descrption**                	|
-|-------------------	|-----------	|----------	|------------------------------------	|
-| users_segments_id 	| int       	| n        	| primary key,auto_increment         	|
-| user_id           	| int       	| n        	| FK1,reference users(user_id)       	|
-| segment_id        	| int       	| n        	| FK1,reference segments(segment_id) 	|
-| creation_date     	| date_time 	| n        	|                                    	|
-| created_by        	| string    	| n        	|                                    	|
-| last_update_date  	| date_time 	| n        	|                                    	|
-| last_updated_by   	| string    	| n        	|                                    	|
+| **column_name**  	| **data_type** 	| **nullable** 	| **descrption**                     	|
+|------------------	|---------------	|--------------	|------------------------------------	|
+| user_segment_id  	| int           	| n            	| primary key,auto_increment         	|
+| user_id          	| int           	| n            	| FK1,reference users(user_id)       	|
+| segment_id       	| int           	| n            	| FK1,reference segments(segment_id) 	|
+| delete_at        	| date_time     	| y            	|                                    	|
+| creation_date    	| date_time     	| n            	|                                    	|
+| created_by       	| string        	| n            	|                                    	|
+| last_update_date 	| date_time     	| n            	|                                    	|
+| last_updated_by  	| string        	| n            	|                                    	|
 
-- orders
+- orders table
 
-| **column_name**      	 | **data_type** 	 | **nullable** 	 | **descrption**                      	|
-|------------------	|-----------	|----------	|---------------------------------------------------	|
-| order_id         	| int       	| n        	| primary key,auto_increment                        	|
-| order_status     	| string    	| n        	| varchar(10),訂單狀態, ordered,delivered,cancelled 	|
-| order_date       	| date      	| n        	| 訂單日期                                          	|
-| customer         	| int       	| n        	| FK,reference users(user_id)                       	|
-| is_delete        	| boolen    	|          	|                                                   	|
-| creation_date    	| date_time 	| n        	|                                                   	|
-| created_by       	| string    	| n        	|                                                   	|
-| last_update_date 	| date_time 	| n        	|                                                   	|
-| last_updated_by  	| string    	| n        	|                                                   	|
+| **column_name**  	| **data_type** 	| **nullable** 	| **descrption**                                    	|
+|------------------	|---------------	|--------------	|---------------------------------------------------	|
+| order_id         	| int           	| n            	| primary key,auto_increment                        	|
+| order_status     	| string        	| n            	| varchar(10),訂單狀態, ordered,delivered,cancelled 	|
+| order_date       	| date          	| n            	| 訂單日期                                          	|
+| customer         	| int           	| n            	| FK,reference users(user_id)                       	|
+| delete_at        	| date_time     	| y            	|                                                   	|
+| creation_date    	| date_time     	| n            	|                                                   	|
+| created_by       	| string        	| n            	|                                                   	|
+| last_update_date 	| date_time     	| n            	|                                                   	|
+| last_updated_by  	| string        	| n            	|                                                   	|
 
-- orders_detail
+- orders_detail table
 
-| **column_name**      	 | **data_type** 	 | **nullable** 	 | **descrption**                         	 |
-|------------------------|-----------------|----------------|------------------------------------------|
-| od_detail_id     	     | int       	     | n        	     | primary key,auto_increment         	     |
-| order_id         	     | int       	     | n        	     | FK1,reference orders(order_id)     	     |
-| product_id       	     | int       	     | n        	     | FK1,reference products(product_id) 	     |
-| quantity         	     | int       	     | 	              | 數量                               	       |
-| creation_date    	     | date_time 	     | n        	     | 	                                        |
-| created_by       	     | string    	     | n        	     | 	                                        |
-| last_update_date 	     | date_time 	     | n        	     | 	                                        |
-| last_updated_by  	     | string    	     | n        	     | 	                                        |
+| **column_name**  	| **data_type** 	| **nullable** 	| **descrption**                     	|
+|------------------	|---------------	|--------------	|------------------------------------	|
+| od_detail_id     	| int           	| n            	| primary key,auto_increment         	|
+| order_id         	| int           	| n            	| FK1,reference orders(order_id)     	|
+| product_id       	| int           	| n            	| FK1,reference products(product_id) 	|
+| quantity         	| int           	| y            	| 數量                               	|
+| creation_date    	| date_time     	| n            	|                                    	|
+| created_by       	| string        	| n            	|                                    	|
+| last_update_date 	| date_time     	| n            	|                                    	|
+| last_updated_by  	| string        	| n            	|                                    	|
 
-- invoices
+- invoices table
 
 | **column_name**  	| **data_type** 	| **nullable** 	| **descrption**                	|
 |------------------	|---------------	|--------------	|-------------------------------	|
@@ -123,37 +119,38 @@ spring.jpa.show-sql=true
 | last_update_date 	| date_time     	| n            	|                               	|
 | last_updated_by  	| string        	| n            	|                               	|
 
-- categories
+- categories table
 
 | **column_name**  	| **data_type** 	| **nullable** 	| **descrption**             	|
 |------------------	|---------------	|--------------	|----------------------------	|
 | category_id      	| int           	| n            	| primary key,auto_increment 	|
 | category_name    	| string        	| n            	| varchar(20)                	|
-| image            	| blob          	|              	|                            	|
+| image            	| blob          	| y            	|                            	|
+| delete_at        	| date_time     	| y            	|                            	|
 | creation_date    	| date_time     	| n            	|                            	|
 | created_by       	| string        	| n            	|                            	|
 | last_update_date 	| date_time     	| n            	|                            	|
 | last_updated_by  	| string        	| n            	|                            	|
 
-- products
+- products table
 
 | **column_name**  	| **data_type** 	| **nullable** 	| **descrption**                      	|
 |------------------	|---------------	|--------------	|-------------------------------------	|
 | product_id       	| int           	| n            	| primary key,auto_increment          	|
 | product_name     	| string        	| n            	| varchar(50),產品名稱                	|
 | category_id      	| int           	| n            	| FK,reference categorys(category_id) 	|
-| width            	| decimal(10,2) 	|              	| 寬度                                	|
-| height           	| decimal(10,2) 	|              	| 長度                                	|
-| price            	| decimal(10,2) 	|              	| 價格                                	|
-| stock            	| int           	|              	| 庫存                                	|
-| description      	| string        	|              	| varchar(500)                        	|
-| image            	| blob          	|              	|                                     	|
+| width            	| decimal(10,2) 	| y            	| 寬度                                	|
+| height           	| decimal(10,2) 	| y            	| 長度                                	|
+| price            	| decimal(10,2) 	| y            	| 價格                                	|
+| stock            	| int           	| y            	| 庫存                                	|
+| description      	| string        	| y            	| varchar(500)                        	|
+| image            	| blob          	| y            	|                                     	|
 | creation_date    	| date_time     	| n            	|                                     	|
 | created_by       	| string        	| n            	|                                     	|
 | last_update_date 	| date_time     	| n            	|                                     	|
 | last_updated_by  	| string        	| n            	|                                     	|
 
-- product_reviews
+- product_reviews table
 
 | **column_name**  	| **data_type** 	| **nullable** 	| **descrption**                     	|
 |------------------	|---------------	|--------------	|------------------------------------	|
@@ -161,9 +158,10 @@ spring.jpa.show-sql=true
 | review_date      	| date_time     	| n            	|                                    	|
 | product_id       	| int           	| n            	| FK1,reference products(product_id) 	|
 | customer         	| int           	| n            	| FK2,reference users(user_id)       	|
-| rating           	| int           	|              	|                                    	|
-| comment          	| string        	|              	| varchar(300)                       	|
+| rating           	| int           	| y            	|                                    	|
+| comment          	| string        	| y            	| varchar(300)                       	|
 | review_status    	| string        	| n            	| accepted,rejected,pending          	|
+| delete_at        	| date_time     	| y            	|                                    	|
 | creation_date    	| date_time     	| n            	|                                    	|
 | created_by       	| string        	| n            	|                                    	|
 | last_update_date 	| date_time     	| n            	|                                    	|
