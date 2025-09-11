@@ -1,9 +1,13 @@
 package com.gtelant.commerce_service.controllers;
 
 import com.gtelant.commerce_service.mappers.UserMapper;
+import com.gtelant.commerce_service.models.Users;
+import com.gtelant.commerce_service.requests.UserRequest;
 import com.gtelant.commerce_service.responses.UserResponse;
 import com.gtelant.commerce_service.services.UserService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
@@ -24,7 +29,6 @@ public class UserController {
     public UserController(UserService userService, UserMapper userMapper) {
         this.userService = userService;
         this.userMapper = userMapper;
-
     }
 
     @Operation(summary = "Get all users", description = "Returns a list of all users")
@@ -50,5 +54,56 @@ public class UserController {
     ) {
         PageRequest pageRequest = PageRequest.of(page, size);
         return userService.getAllUsers(pageRequest).map(userMapper::toUserResponse);
+    }
+
+    @Operation(summary = "Get user by ID",description = "Returns a single user by their ID.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",description = "Successfully retrieved user."),
+            @ApiResponse(responseCode = "404",description = "User not found.")
+    })
+    @GetMapping("/{id}")
+    public ResponseEntity<UserResponse> getUserById(@PathVariable int id){
+        Optional<Users> users = userService.getUserById(id);
+        if(users.isEmpty()){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(userMapper.toUserResponse(users.get()));
+        //方法二
+//        return users.map(value -> ResponseEntity.ok(userMapper.toUserResponse(value)))
+//                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @Operation(summary = "Create a new user.",description = "Creates a new user and returns the created user.")
+    @PostMapping
+    public ResponseEntity<UserResponse> createUser(@RequestBody UserRequest userRequest){
+        Users users = userMapper.toUser(userRequest);
+        Users createdUser = userService.createUser(users);
+        return ResponseEntity.ok(userMapper.toUserResponse(createdUser));
+    }
+
+    @Operation(summary = "Update an existing user.",description = "Updates an existing user by their ID.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",description = "Successfully retrieved user."),
+            @ApiResponse(responseCode = "404",description = "User not found.")
+    })
+    @PutMapping("/{id}")
+    public ResponseEntity<UserResponse> updateUser(@PathVariable int id, @RequestBody UserRequest userRequest){
+        Users users = userMapper.toUser(userRequest);
+        Users updatedUser = userService.updateUser(id,users);
+        if(updatedUser == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(userMapper.toUserResponse(updatedUser));
+    }
+
+    @Operation(summary = "Delete a user.",description = "Deletes a user by their ID.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204",description = "Successfully deleted user."),
+            @ApiResponse(responseCode = "404",description = "User not found.")
+    })
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable int id){
+        userService.deleteUser(id);
+        return ResponseEntity.noContent().build();
     }
 }

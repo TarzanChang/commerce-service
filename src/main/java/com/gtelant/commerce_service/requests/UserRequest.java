@@ -2,6 +2,7 @@ package com.gtelant.commerce_service.requests;
 
 import lombok.Data;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 public class UserRequest {
@@ -16,4 +17,8 @@ public class UserRequest {
     private String password;
     private String role;
     private boolean hasNewsletter;
+    private LocalDateTime creationDate;
+    private String createdBy;
+    private LocalDateTime lastUpdateDate;
+    private String lastUpdatedBy;
 }

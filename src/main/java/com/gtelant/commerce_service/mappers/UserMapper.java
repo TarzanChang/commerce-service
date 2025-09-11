@@ -49,6 +49,10 @@ public class UserMapper {
         users.setPassword(dto.getPassword());
         users.setRole(dto.getRole());
         users.setHasNewsletter(dto.isHasNewsletter());
+        users.setCreatedBy(dto.getCreatedBy());
+        users.setCreationDate(dto.getCreationDate());
+        users.setLastUpdatedBy(dto.getLastUpdatedBy());
+        users.setLastUpdateDate(dto.getLastUpdateDate());
         return users;
     }
 
@@ -60,4 +64,5 @@ public class UserMapper {
         dto.setSegmentName(userSegment.getSegments().getSegmentName());
         return dto;
     }
+
 }
