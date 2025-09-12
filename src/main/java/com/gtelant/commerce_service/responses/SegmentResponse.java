@@ -1,13 +1,10 @@
 package com.gtelant.commerce_service.responses;
 
 import lombok.Data;
-
 import java.time.LocalDateTime;
 
 @Data
-public class UserSegmentResponse {
-    private int userSegmentId;
-    private int userId;
+public class SegmentResponse {
     private int segmentId;
     private String segmentName;
     private LocalDateTime deleteAt;

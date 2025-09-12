@@ -106,4 +106,15 @@ public class UserController {
         userService.deleteUser(id);
         return ResponseEntity.noContent().build();
     }
+
+    @Operation(summary = "Assign a segment to user.",description = "Assign a segment to user by their ID.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204",description = "Successfully deleted user."),
+            @ApiResponse(responseCode = "404",description = "User not found.")
+    })
+    @PostMapping("/{id}/segments/{segmentId}")
+    public ResponseEntity<Void> assignSegmentToUser(@PathVariable int id, @PathVariable int segmentId){
+        userService.assignSegmentToUser(id, segmentId);
+        return ResponseEntity.noContent().build();
+    }
 }
