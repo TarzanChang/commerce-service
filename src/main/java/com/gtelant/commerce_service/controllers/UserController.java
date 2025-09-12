@@ -1,8 +1,10 @@
 package com.gtelant.commerce_service.controllers;
 
 import com.gtelant.commerce_service.mappers.UserMapper;
+import com.gtelant.commerce_service.models.UserSegment;
 import com.gtelant.commerce_service.models.Users;
 import com.gtelant.commerce_service.requests.UserRequest;
+import com.gtelant.commerce_service.requests.WhoColumnsRequest;
 import com.gtelant.commerce_service.responses.UserResponse;
 import com.gtelant.commerce_service.services.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -113,8 +115,8 @@ public class UserController {
             @ApiResponse(responseCode = "404",description = "User not found.")
     })
     @PostMapping("/{id}/segments/{segmentId}")
-    public ResponseEntity<Void> assignSegmentToUser(@PathVariable int id, @PathVariable int segmentId){
-        userService.assignSegmentToUser(id, segmentId);
+    public ResponseEntity<Void> assignSegmentToUser(@PathVariable int id, @PathVariable int segmentId, @RequestBody WhoColumnsRequest whoColumnsRequest){
+        userService.assignSegmentToUser(id, segmentId, whoColumnsRequest);
         return ResponseEntity.noContent().build();
     }
 }

@@ -3,6 +3,7 @@ package com.gtelant.commerce_service.mappers;
 import com.gtelant.commerce_service.models.UserSegment;
 import com.gtelant.commerce_service.models.Users;
 import com.gtelant.commerce_service.requests.UserRequest;
+import com.gtelant.commerce_service.requests.WhoColumnsRequest;
 import com.gtelant.commerce_service.responses.UserResponse;
 import com.gtelant.commerce_service.responses.UserSegmentResponse;
 import org.springframework.stereotype.Component;
@@ -61,8 +62,19 @@ public class UserMapper {
         dto.setUserSegmentId(userSegment.getUserSegmentId());
         dto.setUserId(userSegment.getUsers().getUserId());
         dto.setSegmentId(userSegment.getSegments().getSegmentId());
-        dto.setSegmentName(userSegment.getSegments().getSegmentName());
+        dto.setCreationDate(userSegment.getCreationDate());
+        dto.setCreatedBy(userSegment.getCreatedBy());
+        dto.setLastUpdateDate(userSegment.getLastUpdateDate());
+        dto.setLastUpdatedBy(userSegment.getLastUpdatedBy());
         return dto;
     }
 
+    public UserSegment toUserSegment(WhoColumnsRequest dto){
+        UserSegment userSegment = new UserSegment();
+        userSegment.setCreatedBy(dto.getCreatedBy());
+        userSegment.setCreationDate(dto.getCreationDate());
+        userSegment.setLastUpdatedBy(dto.getLastUpdatedBy());
+        userSegment.setLastUpdateDate(dto.getLastUpdateDate());
+        return userSegment;
+    }
 }

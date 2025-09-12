@@ -6,6 +6,7 @@ import com.gtelant.commerce_service.models.Users;
 import com.gtelant.commerce_service.repositories.SegmentRepository;
 import com.gtelant.commerce_service.repositories.UserRepository;
 import com.gtelant.commerce_service.repositories.UserSegmentRepository;
+import com.gtelant.commerce_service.requests.WhoColumnsRequest;
 import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -98,7 +99,7 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    public void assignSegmentToUser(int id, int segmentId) {
+    public void assignSegmentToUser(int id, int segmentId, WhoColumnsRequest whoColumnsRequest) {
         Optional<Segments> segment = segmentRepository.findById(segmentId);
         Optional<Users> user = userRepository.findById(id);
 
@@ -106,6 +107,10 @@ public class UserService {
             UserSegment userSegment = new UserSegment();
             userSegment.setSegments(segment.get());
             userSegment.setUsers(user.get());
+            userSegment.setCreationDate(whoColumnsRequest.getCreationDate());
+            userSegment.setCreatedBy(whoColumnsRequest.getCreatedBy());
+            userSegment.setLastUpdateDate(whoColumnsRequest.getLastUpdateDate());
+            userSegment.setLastUpdatedBy(whoColumnsRequest.getLastUpdatedBy());
             userSegmentRepository.save(userSegment);
         }
     }
