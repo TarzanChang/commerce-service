@@ -38,14 +38,23 @@ public class UserService {
     public List<Users> getAllUsers() {
             return userRepository.findAll();
     }
-
-    public Page<Users> getAllUsers(PageRequest pageRequest) {
-        return userRepository.findAll(pageRequest);
-    }
+    //聯集的寫法，即搜尋條件為 "or" 的寫法
 //    public Page<Users> getAllUsers(String query, Boolean hasNewsletter, Integer segmentId, PageRequest pageRequest) {
-//        Specification<Users> spec = userSpecification(query, hasNewsletter, segmentId);
-//        return userRepository.findAll(spec, pageRequest);
+//        if(query != null && !query.isEmpty()){
+//            return userRepository.findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(query, query, pageRequest);
+//        } else if (hasNewsletter != null) {
+//            return userRepository.findByHasNewsletter(hasNewsletter,pageRequest);
+//        } else if (segmentId != null) {
+//            return userRepository.findByUserSegmentList_Segments_SegmentId(segmentId,pageRequest);
+//        }
+//        return userRepository.findAll(pageRequest);
 //    }
+
+    //交集的寫法 Specification
+    public Page<Users> getAllUsers(String query, Boolean hasNewsletter, Integer segmentId, PageRequest pageRequest) {
+        Specification<Users> spec = userSpecification(query,hasNewsletter,segmentId);
+        return userRepository.findAll(spec, pageRequest);
+    }
 
     private Specification<Users> userSpecification(String queryName, Boolean hasNewsletter, Integer segmentId) {
         return ((root, query, criteriaBuilder) -> {
@@ -55,8 +64,10 @@ public class UserService {
 
             if(queryName != null && !queryName.isEmpty()) {
                 predicates.add(criteriaBuilder.or(
-                        criteriaBuilder.like(criteriaBuilder.lower(root.get("firstName")), "%"+ queryName.toLowerCase()+"%"),
-                        criteriaBuilder.like(criteriaBuilder.lower(root.get("lastName")), "%"+ queryName.toLowerCase()+"%")
+                        criteriaBuilder.like(criteriaBuilder
+                                        .lower(root.get("firstName")), "%"+ queryName.toLowerCase()+"%")
+                        ,criteriaBuilder.like(criteriaBuilder
+                                        .lower(root.get("lastName")), "%"+ queryName.toLowerCase()+"%")
                 ));
             }
             if(hasNewsletter != null) {
@@ -65,13 +76,13 @@ public class UserService {
 
             if(segmentId != null) {
                 Join<Users , UserSegment> userUserSegmentJoin = root.join("userSegmentList");
-                predicates.add(criteriaBuilder.equal(userUserSegmentJoin.get("segment").get("id"), segmentId));
+                predicates.add(criteriaBuilder.equal(userUserSegmentJoin.get("segments").get("segmentId"), segmentId));
 
                 //如果 userSegment有 屬性segmentId 則可以直接使用
                 //predicates.add(criteriaBuilder.equal(userUserSegmentJoin.get("segmentId"), segmentId));
 
                 //如果欲查詢Segment參數為字串（name）=> segmentName
-                //predicates.add(criteriaBuilder.equal(userUserSegmentJoin.get("segment").get("name"), segmentName)
+                //predic ates.add(criteriaBuilder.equal(userUserSegmentJoin.get("segment").get("name"), segmentName)
             }
 
             Predicate[] predicateArray = predicates.toArray(new Predicate[0]);

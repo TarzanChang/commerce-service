@@ -52,10 +52,13 @@ public class UserController {
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "") String query,
             @RequestParam(required = false) Boolean hasNewsletter,
+//            @RequestParam(required = false) Boolean lastVisited,
+//            @RequestParam(required = false) Boolean hasOrdered,
+//            @RequestParam(required = false) Boolean ordered,
             @RequestParam(required = false) Integer segmentId
     ) {
         PageRequest pageRequest = PageRequest.of(page, size);
-        return userService.getAllUsers(pageRequest).map(userMapper::toUserResponse);
+        return userService.getAllUsers(query,hasNewsletter, segmentId, pageRequest).map(userMapper::toUserResponse);
     }
 
     @Operation(summary = "Get user by ID",description = "Returns a single user by their ID.")

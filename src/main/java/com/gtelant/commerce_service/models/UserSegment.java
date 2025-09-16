@@ -38,10 +38,10 @@ public class UserSegment {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id",referencedColumnName = "user_id")
-    @JsonBackReference
+//    @JsonBackReference
     private Users users;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "segment_id",referencedColumnName = "segment_id")
-    @JsonBackReference
+//    @JsonBackReference
     private Segments segments;
 }

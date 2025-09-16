@@ -61,7 +61,10 @@ public class UserMapper {
         UserSegmentResponse dto = new UserSegmentResponse();
         dto.setUserSegmentId(userSegment.getUserSegmentId());
         dto.setUserId(userSegment.getUsers().getUserId());
+        //練習組合
+//        dto.setUsetFullName(userSegment.getUsers().getFirstName() + " " + userSegment.getUsers().getLastName());
         dto.setSegmentId(userSegment.getSegments().getSegmentId());
+        dto.setSegmentName(userSegment.getSegments().getSegmentName());
         dto.setCreationDate(userSegment.getCreationDate());
         dto.setCreatedBy(userSegment.getCreatedBy());
         dto.setLastUpdateDate(userSegment.getLastUpdateDate());

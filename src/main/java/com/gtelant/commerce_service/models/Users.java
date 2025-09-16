@@ -25,6 +25,7 @@ public class Users {
     private String firstName;
     @Column(name = "last_name",nullable = false)
     private String lastName;
+//    private String FullName;
     @Column(name = "email",unique = true)
     private String email;
     @Column(name = "birthday")
