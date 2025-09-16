@@ -34,7 +34,6 @@ public class UserService {
     }
 
 
-//    public List<Users> getAllUsers(String query, Boolean hasNewsletter, Integer segmentId) {
     public List<Users> getAllUsers() {
             return userRepository.findAll();
     }

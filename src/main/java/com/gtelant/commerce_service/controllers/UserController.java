@@ -1,7 +1,6 @@
 package com.gtelant.commerce_service.controllers;
 
 import com.gtelant.commerce_service.mappers.UserMapper;
-import com.gtelant.commerce_service.models.UserSegment;
 import com.gtelant.commerce_service.models.Users;
 import com.gtelant.commerce_service.requests.UserRequest;
 import com.gtelant.commerce_service.requests.WhoColumnsRequest;
@@ -22,7 +21,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
-@Tag(name = "Users", description = "User management APIs")
+@Tag(name = "Users", description = "User management APIs.")
 public class UserController {
     private final UserService userService;
     private final UserMapper userMapper;
@@ -36,10 +35,6 @@ public class UserController {
     @Operation(summary = "Get all users", description = "Returns a list of all users")
     @GetMapping
     public ResponseEntity<List<UserResponse>> getAllUsers(){
-//            @RequestParam(defaultValue = "") String query,
-//            @RequestParam(required = false) Boolean hasNewsletter,
-//            @RequestParam(required = false) Integer segmentId){
-
         return ResponseEntity.ok(userService.getAllUsers().stream()
                 .map(userMapper::toUserResponse)
                 .toList());

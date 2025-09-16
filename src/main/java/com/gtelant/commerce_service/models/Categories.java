@@ -8,6 +8,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "categories")
@@ -33,4 +34,7 @@ public class Categories {
     private LocalDateTime lastUpdateDate;
     @Column(name = "last_updated_by",nullable = false)
     private String lastUpdatedBy;
+
+    @OneToMany(mappedBy = "categories",fetch = FetchType.LAZY)
+    private List<Products> productsList;
 }
