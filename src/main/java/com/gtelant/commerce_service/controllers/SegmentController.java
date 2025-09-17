@@ -39,20 +39,6 @@ public class SegmentController {
                 .toList());
     }
 
-
-    @Operation(summary = "Get all Segments pagination", description = "Returns a page of Segments")
-    @GetMapping("/page")
-    public Page<SegmentResponse> getAllSegmentsPage(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size,
-            @RequestParam(defaultValue = "") String query,
-            @RequestParam(required = false) Boolean hasNewsletter,
-            @RequestParam(required = false) Integer segmentId
-    ) {
-        PageRequest pageRequest = PageRequest.of(page, size);
-        return segmentService.getAllSegments(pageRequest).map(segmentMapper::toSegmentResponse);
-    }
-
     @Operation(summary = "Get segment by ID.",description = "Returns a single segment by their ID.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",description = "Successfully retrieved Segment."),

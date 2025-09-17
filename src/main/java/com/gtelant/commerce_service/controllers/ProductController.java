@@ -1,9 +1,13 @@
 package com.gtelant.commerce_service.controllers;
 
 import com.gtelant.commerce_service.mappers.ProductMapper;
+import com.gtelant.commerce_service.models.Categories;
 import com.gtelant.commerce_service.models.Products;
+import com.gtelant.commerce_service.repositories.CategoryRepository;
 import com.gtelant.commerce_service.requests.ProductRequest;
+import com.gtelant.commerce_service.responses.CategoryResponse;
 import com.gtelant.commerce_service.responses.ProductResponse;
+import com.gtelant.commerce_service.services.CategoryService;
 import com.gtelant.commerce_service.services.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -24,19 +28,28 @@ import java.util.Optional;
 public class ProductController {
     private final ProductService productService;
     private final ProductMapper productMapper;
+    private final CategoryRepository categoryRepository;
+    private final CategoryService categoryService;
 
     @Autowired
-    public ProductController(ProductService productService, ProductMapper productMapper) {
+    public ProductController(ProductService productService, ProductMapper productMapper,
+                             CategoryRepository categoryRepository, CategoryService categoryService) {
         this.productService = productService;
         this.productMapper = productMapper;
+        this.categoryRepository = categoryRepository;
+        this.categoryService = categoryService;
     }
 
     @Operation(summary = "Get all Products.",description = "Return a list of all products.")
     @GetMapping
-    public ResponseEntity<List<ProductResponse>> getAllUsers(){
-        return ResponseEntity.ok(productService.getAllProducts().stream()
-                .map(productMapper::toProductResponse)
-                .toList());
+    public ResponseEntity<List<ProductResponse>> getAllProducts(){
+        List<Products> productsList = productService.getAllProducts();
+        return ResponseEntity.ok(productsList.stream()
+                .map(products -> {
+                    ProductResponse response = new ProductResponse(products);
+                    response.setCategory(new CategoryResponse(products.getCategories()));
+                    return response;
+                }).toList());
     }
 
     @Operation(summary = "Get all Products pagination", description = "Returns a page of Products")
@@ -60,10 +73,13 @@ public class ProductController {
     @GetMapping("/{id}")
     public ResponseEntity<ProductResponse> getProductById(@PathVariable int id){
         Optional<Products> products = productService.getProductById(id);
-        if(products.isEmpty()){
+        if(products.isPresent()){
+            ProductResponse response = new ProductResponse(products.get());
+            response.setCategory(new CategoryResponse(products.get().getCategories()));
+            return ResponseEntity.ok(response);
+        } else {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(productMapper.toProductResponse(products.get()));
         //方法二
 //        return users.map(value -> ResponseEntity.ok(userMapper.toUserResponse(value)))
 //                .orElseGet(() -> ResponseEntity.notFound().build());
@@ -72,7 +88,8 @@ public class ProductController {
     @Operation(summary = "Create a new product.",description = "Creates a new product and returns the created product.")
     @PostMapping
     public ResponseEntity<ProductResponse> createUser(@RequestBody ProductRequest productRequest){
-        Products products = productMapper.toProduct(productRequest);
+        Categories categories = categoryService.getCategoryById(productRequest.getCategoryId());
+        Products products = productMapper.toProduct(productRequest,null, categories);
         Products createdProduct = productService.createProduct(products);
         return ResponseEntity.ok(productMapper.toProductResponse(createdProduct));
     }
@@ -84,8 +101,14 @@ public class ProductController {
     })
     @PutMapping("/{id}")
     public ResponseEntity<ProductResponse> updateProduct(@PathVariable int id, @RequestBody ProductRequest productRequest){
-        Products products = productMapper.toProduct(productRequest);
+        Categories categories = categoryService.getCategoryById(productRequest.getCategoryId());
+        Products existingProduct = productService.getProductById(id).orElseThrow(() -> new RuntimeException("找不到產品 ID: " + id));
+        Products products = productMapper.toProduct(productRequest,existingProduct,categories);
         Products updatedProduct = productService.updatedProduct(id,products);
+        System.out.println("== existingProduct = " + existingProduct.getProductId());
+        System.out.println("== dto categoryId = " + productRequest.getCategoryId());
+        System.out.println("== mapped categoryId = " + products.getCategories().getCategoryId());
+
         if(updatedProduct == null){
             return ResponseEntity.notFound().build();
         }

@@ -54,4 +54,13 @@ public class Products {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id",referencedColumnName = "category_id")
     private Categories categories;
+
+//    @Override
+//    public String toString() {
+//        return "Products{" +
+//                "productId=" + productId +
+//                ", productName='" + productName + '\'' +
+//                ", category=" + (categories != null ? categories.getCategoryId() : "null") +
+//                '}';
+//    }
 }
