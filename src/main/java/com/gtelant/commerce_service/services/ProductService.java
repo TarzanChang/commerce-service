@@ -1,8 +1,10 @@
 package com.gtelant.commerce_service.services;
 
+import com.gtelant.commerce_service.models.Categories;
 import com.gtelant.commerce_service.models.Products;
 import com.gtelant.commerce_service.models.Users;
 import com.gtelant.commerce_service.repositories.ProductRepository;
+import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -27,12 +29,12 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    public Page<Products> getAllProducts(String query, Integer sales, Integer stock, PageRequest pageRequest){
-        Specification<Products> spec = productsSpecification(query,sales,stock);
+    public Page<Products> getAllProducts(String query,Integer categoryId, Integer stockFrom, Integer stockTo, PageRequest pageRequest){
+        Specification<Products> spec = productsSpecification(query,categoryId,stockFrom,stockTo);
         return productRepository.findAll(spec, pageRequest);
     }
 
-    private Specification<Products> productsSpecification(String queryName, Integer sales, Integer stock) {
+    private Specification<Products> productsSpecification(String queryName, Integer categoryId, Integer stockFrom, Integer stockTo) {
         return ((root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
 
@@ -40,11 +42,15 @@ public class ProductService {
                 predicates.add(criteriaBuilder.like(criteriaBuilder
                         .lower(root.get("productName")),"%" + queryName.toLowerCase() +"%"));
             }
-            if(sales != null){
-                predicates.add(criteriaBuilder.equal(root.get("sales"), sales));
+            if(stockFrom != null && stockTo == null){
+                predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("stock"), stockFrom));
+                }
+            if(stockFrom != null && stockTo != null){
+                predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("stock"), stockFrom));
+                predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("stock"), stockTo));
             }
-            if(stock != null){
-                predicates.add(criteriaBuilder.equal(root.get("stock"), stock));
+            if (categoryId != null){
+                predicates.add(criteriaBuilder.equal(root.get("categories").get("categoryId"),categoryId));
             }
             Predicate[] predicateArray = predicates.toArray(new Predicate[0]);
             return criteriaBuilder.and(predicateArray);

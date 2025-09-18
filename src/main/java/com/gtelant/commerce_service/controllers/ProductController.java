@@ -58,11 +58,12 @@ public class ProductController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "") String query,
-            @RequestParam(required = false) Integer sales,
-            @RequestParam(required = false) Integer stock
+            @RequestParam(required = false) Integer categoryId,
+            @RequestParam(required = false) Integer stockFrom,
+            @RequestParam(required = false) Integer stockTo
     ) {
         PageRequest pageRequest = PageRequest.of(page, size);
-        return productService.getAllProducts(query,sales, stock, pageRequest).map(productMapper::toProductResponse);
+        return productService.getAllProducts(query,categoryId ,stockFrom, stockTo, pageRequest).map(productMapper::toProductResponse);
     }
 
     @Operation(summary = "Get product by ID",description = "Returns a single product by their ID.")

@@ -1,5 +1,6 @@
 package com.gtelant.commerce_service.models;
 
+import com.gtelant.commerce_service.enums.ReviewStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,7 +28,7 @@ public class ProductReviews {
     @Column(name = "comment")
     private String comment;
     @Column(name = "review_status")
-    private String reviewStatus;
+    private ReviewStatus reviewStatus;
     @Column(name = "delete_at")
     private LocalDateTime deleteAt;
     @CreationTimestamp
@@ -41,10 +42,10 @@ public class ProductReviews {
     @Column(name = "last_updated_by",nullable = false)
     private String lastUpdatedBy;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id",referencedColumnName = "product_id")
     private Products products;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id",referencedColumnName = "user_id")
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id",referencedColumnName = "user_id",nullable = false)
     private Users users;
 }

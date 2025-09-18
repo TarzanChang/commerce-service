@@ -23,13 +23,13 @@ public class CategoryResponse {
     private List<CategoryProductResponse> productList;
 
     public CategoryResponse(Categories categories) {
-        this.categoryId = getCategoryId();
-        this.categoryName = getCategoryName();
-        this.deleteAt = getDeleteAt();
-        this.creationDate = getCreationDate();
-        this.createdBy = getCreatedBy();
-        this.lastUpdateDate = getLastUpdateDate();
-        this.lastUpdatedBy = getLastUpdatedBy();
+        this.categoryId = categories.getCategoryId();
+        this.categoryName = categories.getCategoryName();
+        this.deleteAt = categories.getDeleteAt();
+        this.creationDate = categories.getCreationDate();
+        this.createdBy = categories.getCreatedBy();
+        this.lastUpdateDate = categories.getLastUpdateDate();
+        this.lastUpdatedBy = categories.getLastUpdatedBy();
     }
 
 //    public CategoryResponse() {
