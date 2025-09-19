@@ -30,12 +30,11 @@ public class ProductMapper {
         dto.setStock(products.getStock());
         dto.setSales(products.getSales());
         dto.setDescription(products.getDescription());
-        dto.setDeleteAt(products.getDeleteAt());
+//        dto.setDeleteAt(products.getDeleteAt());
         dto.setCreatedBy(products.getCreatedBy());
         dto.setCreationDate(products.getCreationDate());
         dto.setLastUpdatedBy(products.getLastUpdatedBy());
         dto.setLastUpdateDate(products.getLastUpdateDate());
-//        dto.setCategory(products.getCategories().get);
         return dto;
     }
 
@@ -87,11 +86,11 @@ public class ProductMapper {
         }else {
             products.setDescription(original.getDescription());
         }
-        if(dto.getDeleteAt() != null){
-            products.setDeleteAt(dto.getDeleteAt());
-        }else {
-            products.setDeleteAt(original.getDeleteAt());
-        }
+//        if(dto.getDeleteAt() != null){
+//            products.setDeleteAt(dto.getDeleteAt());
+//        }else {
+//            products.setDeleteAt(original.getDeleteAt());
+//        }
         products.setCreatedBy(dto.getCreatedBy());
         products.setCreationDate(dto.getCreationDate());
         products.setLastUpdatedBy(dto.getLastUpdatedBy());

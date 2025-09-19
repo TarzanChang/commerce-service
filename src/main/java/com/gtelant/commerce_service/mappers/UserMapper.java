@@ -25,7 +25,7 @@ public class UserMapper {
         dto.setZipcode(users.getZipcode());
         dto.setRole(users.getRole());
         dto.setHasNewsletter(users.isHasNewsletter());
-        dto.setDeleteAt(users.getDeleteAt());
+//        dto.setDeleteAt(users.getDeleteAt());
         dto.setCreatedBy(users.getCreatedBy());
         dto.setCreationDate(users.getCreationDate());
         dto.setLastUpdatedBy(users.getLastUpdatedBy());

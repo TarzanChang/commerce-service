@@ -1,16 +1,20 @@
 package com.gtelant.commerce_service.responses;
 
 import com.gtelant.commerce_service.enums.ReviewStatus;
-import com.gtelant.commerce_service.models.Products;
+import com.gtelant.commerce_service.models.PtReviews;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Data
-public class ProductReviewResponse {
-    private Integer ptReviewId;
+@NoArgsConstructor
+@AllArgsConstructor
+public class PtReviewResponse {
+    private int ptReviewId;
     private UserResponse users;
-    private Products products;
+    private ProductResponse products;
     private int rating;
     private String comment;
     private ReviewStatus status;
@@ -18,4 +22,10 @@ public class ProductReviewResponse {
     private String createdBy;
     private LocalDateTime lastUpdateDate;
     private String lastUpdatedBy;
+
+//    private List<UserResponse> userResponseList;
+//    private List<ProductResponse> productResponseList;
+
+    public PtReviewResponse(PtReviews ptReviews) {
+    }
 }

@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductReviews {
+public class PtReviews {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "pt_review_id")
@@ -27,8 +27,9 @@ public class ProductReviews {
     private int rating;
     @Column(name = "comment")
     private String comment;
+    @Enumerated(EnumType.STRING)
     @Column(name = "review_status")
-    private ReviewStatus reviewStatus;
+    private ReviewStatus reviewStatus = ReviewStatus.PENDING;
     @Column(name = "delete_at")
     private LocalDateTime deleteAt;
     @CreationTimestamp
@@ -42,10 +43,10 @@ public class ProductReviews {
     @Column(name = "last_updated_by",nullable = false)
     private String lastUpdatedBy;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id",referencedColumnName = "product_id")
     private Products products;
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id",referencedColumnName = "user_id",nullable = false)
     private Users users;
 }

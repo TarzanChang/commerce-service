@@ -32,6 +32,4 @@ public class CategoryResponse {
         this.lastUpdatedBy = categories.getLastUpdatedBy();
     }
 
-//    public CategoryResponse() {
-//    }
 }

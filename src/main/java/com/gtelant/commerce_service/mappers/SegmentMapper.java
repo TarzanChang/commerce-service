@@ -11,7 +11,7 @@ public class SegmentMapper {
         SegmentResponse dto = new SegmentResponse();
         dto.setSegmentId(segments.getSegmentId());
         dto.setSegmentName(segments.getSegmentName());
-        dto.setDeleteAt(segments.getDeleteAt());
+//        dto.setDeleteAt(segments.getDeleteAt());
         dto.setCreationDate(segments.getCreationDate());
         dto.setCreatedBy(segments.getCreatedBy());
         dto.setLastUpdateDate(segments.getLastUpdateDate());

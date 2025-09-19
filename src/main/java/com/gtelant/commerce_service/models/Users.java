@@ -59,4 +59,27 @@ public class Users {
 
     @OneToMany(mappedBy = "users", fetch = FetchType.LAZY)
     private List<UserSegment> userSegmentList;
+
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId=" + userId +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", birthday=" + birthday +
+                ", address='" + address + '\'' +
+                ", city='" + city + '\'' +
+                ", zipcode='" + zipcode + '\'' +
+                ", password='" + password + '\'' +
+                ", role='" + role + '\'' +
+                ", hasNewsletter=" + hasNewsletter +
+                ", deleteAt=" + deleteAt +
+                ", creationDate=" + creationDate +
+                ", createdBy=" + createdBy +
+                ", creationDate=" + lastUpdateDate +
+                ", createdBy=" + lastUpdatedBy +
+                '}';
+    }
 }

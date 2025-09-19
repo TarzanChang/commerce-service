@@ -11,7 +11,7 @@ public class CategoryMapper {
         CategoryResponse dto = new CategoryResponse();
         dto.setCategoryId(categories.getCategoryId());
         dto.setCategoryName(categories.getCategoryName());
-        dto.setDeleteAt(categories.getDeleteAt());
+//        dto.setDeleteAt(categories.getDeleteAt());
         dto.setCreationDate(categories.getCreationDate());
         dto.setCreatedBy(categories.getCreatedBy());
         dto.setLastUpdateDate(categories.getLastUpdateDate());

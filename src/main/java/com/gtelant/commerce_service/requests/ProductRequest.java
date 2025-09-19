@@ -16,7 +16,6 @@ public class ProductRequest {
     private Integer stock;
     private Integer sales;
     private String description;
-    private LocalDateTime deleteAt;
     private LocalDateTime creationDate;
     private String createdBy;
     private LocalDateTime lastUpdateDate;
