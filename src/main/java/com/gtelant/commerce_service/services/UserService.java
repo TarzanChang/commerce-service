@@ -93,6 +93,10 @@ public class UserService {
         return userRepository.findById(id);
     }
 
+    public Optional<Users> getByEmail(String email){
+        return userRepository.findByEmail(email);
+    }
+
     public Users createUser(Users users) {
         return userRepository.save(users);
     }

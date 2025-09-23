@@ -1,8 +1,8 @@
 package com.gtelant.commerce_service.configs;
 
 import com.gtelant.commerce_service.models.Users;
-import com.gtelant.commerce_service.repositories.UserRepository;
 import com.gtelant.commerce_service.services.JwtService;
+import com.gtelant.commerce_service.services.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,7 +25,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     @Autowired
     private JwtService jwtService;
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -46,7 +46,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
             if(email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 // db裡面找到對應的username
-                Optional<Users> users = userRepository.findByEmail(email);
+                Optional<Users> users = userService.getByEmail(email);
                 // todo 驗證 token是否過期或是無效
                 if (users.isPresent()) {
                     //*****權限

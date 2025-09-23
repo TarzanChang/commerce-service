@@ -8,10 +8,9 @@ import com.gtelant.commerce_service.services.SegmentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +19,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/segments")
+@SecurityRequirement(name = "bearerAuth")
 @Tag(name = "Segments", description = "Segment management APIs.")
 public class SegmentController {
     private final SegmentService segmentService;

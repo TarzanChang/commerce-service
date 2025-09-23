@@ -22,6 +22,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
+@SecurityRequirement(name = "bearerAuth")
 @Tag(name = "Users", description = "User management APIs.")
 public class UserController {
     private final UserService userService;
@@ -33,7 +34,7 @@ public class UserController {
         this.userMapper = userMapper;
     }
 
-    @Operation(summary = "Get all users", description = "Returns a list of all users")
+    @Operation(summary = "Get all users", description = "Returns a list of all users",security = @SecurityRequirement(name = "bearerAuth"))
     @GetMapping
     public ResponseEntity<List<UserResponse>> getAllUsers(){
         return ResponseEntity.ok(userService.getAllUsers().stream()
