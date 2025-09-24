@@ -35,7 +35,8 @@ public class SpringDocConfig {
     public GroupedOpenApi groupedOpenApi() {
         return GroupedOpenApi.builder().group("public-apis")
                 .pathsToMatch("/users/**", "/categories/**","/segments/**"
-                        ,"/products/**","/productReviews/**","/jwt/**")
+                        ,"/products/**","/productReviews/**","/jwt/**"
+                        ,"/orders/**")
                 .build();
     }
 }

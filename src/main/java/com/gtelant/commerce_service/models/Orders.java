@@ -1,5 +1,6 @@
 package com.gtelant.commerce_service.models;
 
+import com.gtelant.commerce_service.enums.OrderStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,10 +22,13 @@ public class Orders {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_id")
     private int orderId;
+    @Enumerated(EnumType.STRING)
     @Column(name = "order_status")
-    private String orderStatus;
+    private OrderStatus orderStatus = OrderStatus.DELIVERED;
     @Column(name = "order_date")
     private LocalDate orderDate;
+    @Column(name = "returned")
+    private boolean returned = false;
     @Column(name = "delete_at")
     private LocalDateTime deleteAt;
     @CreationTimestamp
@@ -42,6 +46,7 @@ public class Orders {
     @JoinColumn(name = "user_id",referencedColumnName = "user_id")
     private Users users;
 
-    @OneToMany(mappedBy = "orders",fetch = FetchType.LAZY)
-    private List<OrderDetail> orderDetails;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "od_detail_id",referencedColumnName = "od_detail_id")
+    private OrderDetail orderDetails;
 }

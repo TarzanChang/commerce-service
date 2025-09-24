@@ -36,7 +36,7 @@ public class OrderDetail {
     @Column(name = "last_updated_by",nullable = false)
     private String lastUpdatedBy;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id",referencedColumnName = "order_id")
     private Orders orders;
 
