@@ -82,17 +82,17 @@ spring.jpa.show-sql=true
 
 - orders table
 
-| **column_name**  	| **data_type** 	| **nullable** 	| **descrption**                                    	|
-|------------------	|---------------	|--------------	|---------------------------------------------------	|
-| order_id         	| int           	| n            	| primary key,auto_increment                        	|
-| order_status     	| string        	| n            	| varchar(10),訂單狀態, ordered,delivered,cancelled 	|
-| order_date       	| date          	| n            	| 訂單日期                                          	|
-| customer         	| int           	| n            	| FK,reference users(user_id)                       	|
-| delete_at        	| date_time     	| y            	|                                                   	|
-| creation_date    	| date_time     	| n            	|                                                   	|
-| created_by       	| string        	| n            	|                                                   	|
-| last_update_date 	| date_time     	| n            	|                                                   	|
-| last_updated_by  	| string        	| n            	|                                                   	|
+| **column_name**  	 | **data_type** 	| **nullable** 	| **descrption**                                    	|
+|--------------------|---------------	|--------------	|---------------------------------------------------	|
+| order_id         	 | int           	| n            	| primary key,auto_increment                        	|
+| order_status     	 | string        	| n            	| varchar(10),訂單狀態, ordered,delivered,cancelled 	|
+| order_date       	 | date          	| n            	| 訂單日期                                          	|
+| user_id          	 | int           	| n            	| FK,reference users(user_id)                       	|
+| delete_at        	 | date_time     	| y            	|                                                   	|
+| creation_date    	 | date_time     	| n            	|                                                   	|
+| created_by       	 | string        	| n            	|                                                   	|
+| last_update_date 	 | date_time     	| n            	|                                                   	|
+| last_updated_by  	 | string        	| n            	|                                                   	|
 
 - orders_detail table
 
@@ -125,7 +125,6 @@ spring.jpa.show-sql=true
 |------------------	|---------------	|--------------	|----------------------------	|
 | category_id      	| int           	| n            	| primary key,auto_increment 	|
 | category_name    	| string        	| n            	| varchar(20)                	|
-| image            	| blob          	| y            	|                            	|
 | delete_at        	| date_time     	| y            	|                            	|
 | creation_date    	| date_time     	| n            	|                            	|
 | created_by       	| string        	| n            	|                            	|
@@ -144,7 +143,6 @@ spring.jpa.show-sql=true
 | price            	| decimal(10,2) 	| y            	| 價格                                	|
 | stock            	| int           	| y            	| 庫存                                	|
 | description      	| string        	| y            	| varchar(500)                        	|
-| image            	| blob          	| y            	|                                     	|
 | creation_date    	| date_time     	| n            	|                                     	|
 | created_by       	| string        	| n            	|                                     	|
 | last_update_date 	| date_time     	| n            	|                                     	|
@@ -152,17 +150,17 @@ spring.jpa.show-sql=true
 
 - product_reviews table
 
-| **column_name**  	| **data_type** 	| **nullable** 	| **descrption**                     	|
-|------------------	|---------------	|--------------	|------------------------------------	|
-| pt_review_id     	| int           	| n            	| primary key,auto_increment         	|
-| review_date      	| date_time     	| n            	|                                    	|
-| product_id       	| int           	| n            	| FK1,reference products(product_id) 	|
-| customer         	| int           	| n            	| FK2,reference users(user_id)       	|
-| rating           	| int           	| y            	|                                    	|
-| comment          	| string        	| y            	| varchar(300)                       	|
-| review_status    	| string        	| n            	| accepted,rejected,pending          	|
-| delete_at        	| date_time     	| y            	|                                    	|
-| creation_date    	| date_time     	| n            	|                                    	|
-| created_by       	| string        	| n            	|                                    	|
-| last_update_date 	| date_time     	| n            	|                                    	|
-| last_updated_by  	| string        	| n            	|                                    	|
+| **column_name**  	 | **data_type** 	| **nullable** 	| **descrption**                     	|
+|--------------------|---------------	|--------------	|------------------------------------	|
+| pt_review_id     	 | int           	| n            	| primary key,auto_increment         	|
+| review_date      	 | date_time     	| n            	|                                    	|
+| product_id       	 | int           	| n            	| FK1,reference products(product_id) 	|
+| user_id          	 | int           	| n            	| FK2,reference users(user_id)       	|
+| rating           	 | int           	| y            	|                                    	|
+| comment          	 | string        	| y            	| varchar(300)                       	|
+| review_status    	 | string        	| n            	| accepted,rejected,pending          	|
+| delete_at        	 | date_time     	| y            	|                                    	|
+| creation_date    	 | date_time     	| n            	|                                    	|
+| created_by       	 | string        	| n            	|                                    	|
+| last_update_date 	 | date_time     	| n            	|                                    	|
+| last_updated_by  	 | string        	| n            	|                                    	|

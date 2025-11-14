@@ -6,7 +6,6 @@ import com.gtelant.commerce_service.models.Categories;
 import com.gtelant.commerce_service.requests.CategoryRequest;
 import com.gtelant.commerce_service.responses.CategoryProductResponse;
 import com.gtelant.commerce_service.responses.CategoryResponse;
-import com.gtelant.commerce_service.responses.ProductResponse;
 import com.gtelant.commerce_service.services.CategoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
